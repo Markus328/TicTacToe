@@ -10,6 +10,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -23,21 +25,21 @@ import base.Renderable;
 import base.Sprite;
 import base.Stepwatch;
 
-public class Panel extends JPanel{
+public class Panel extends JPanel implements MouseListener{
 	private World world;
-	private Stepwatch sw;
 	private Graphics2D graphics;
 	private ArrayList<Renderable> views;
 	private BufferedImage offscreen;
+	private Controller controller;
 	public Panel(JFrame master) {
 		setVisible(master.isVisible());
 		setBounds(master.getBounds());
-		sw = new Stepwatch();
+		addMouseListener(this);
 		views = new ArrayList<Renderable>();
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice gd = ge.getDefaultScreenDevice();
 		GraphicsConfiguration gc = gd.getDefaultConfiguration();
-		offscreen = gc.createCompatibleImage(getWidth(), getHeight());
+		offscreen = gc.createCompatibleImage(getBounds().width, getBounds().height);
 		graphics = (Graphics2D) offscreen.getGraphics();
 		
 		graphics.setBackground(getBackground());
@@ -46,22 +48,8 @@ public class Panel extends JPanel{
 		world = World.create_instance(getWidth(), getHeight());
 	}
 	public void paint(Graphics g) {
-		try {
-		step(sw.tick());
+		step();
 		g.drawImage(offscreen, 0, 0, null);
-		repaint();
-		try { 
-			Thread.sleep(1000/30);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-		catch(Exception e) {
-			g.dispose();
-			graphics.dispose();
-			throw e;
-		}
 	}
 	public void addNotify() {
 		super.addNotify();
@@ -73,17 +61,50 @@ public class Panel extends JPanel{
 		for(Entity e : world.getEntities()) {
 			views.add(e.getView());
 		}
+		this.repaint();
 		
 	}
-	public void step(double tick) {
-		world.step(tick);
-		graphics.setColor(Color.BLACK);
+	public void step() {
+		world.step(1);
 		for(Renderable e : views) {
 			
 			if(e.update()) {
 				e.render(graphics);
 			}
 		}
+		
+	}
+	public Controller getController() {
+		return controller;
+	}
+	public void setController(Controller controller) {
+		this.controller = controller;
+		controller.setPanel(this);
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		controller.tap(e.getX(), e.getY());
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }

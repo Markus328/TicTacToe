@@ -7,7 +7,7 @@ import base.ImageFactory;
 
 public class Cell extends Entity {
 
-	public static final int IS_X = 0, IS_O = 1, IS_NONE = 2;
+	public static final int IS_NONE = 2;
 	
 	
 	private int type;
@@ -18,18 +18,6 @@ public class Cell extends Entity {
 		setType(IS_NONE);
 		setView(new CellView(this));
 		// TODO Auto-generated constructor stub
-	}
-	@Override
-	public void step(double tick) {
-		// TODO Auto-generated method stub
-		super.step(tick);
-		if(type != IS_NONE) {
-		timer += tick;
-		if(timer <= -1) {
-			timer = 0;
-			setType(type == IS_X ? IS_O : IS_X);
-		}
-		}
 	}
 	public int getType() {
 		return type;
@@ -45,11 +33,10 @@ public class Cell extends Entity {
 	}
 	public void tap() {
 		if(type == IS_NONE) {
-			setType(IS_X);
+			setType(World.get_instance().getPlaying());
+			World.get_instance().switchPlayer();
 		}
-		else {
-			setType(IS_NONE);
-		}
+		setType(getType());
 		
 	}
 	

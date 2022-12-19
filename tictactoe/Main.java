@@ -10,20 +10,10 @@ public class Main {
 		// TODO Auto-generated method stub
 		GameFrame frame = new GameFrame();
 		Panel gp = new Panel(frame);
+		frame.add(gp);
 		Controller controller = new Controller();
-		frame.setController(controller);
-		SwingUtilities.invokeLater(new Runnable(){
-			private GameFrame frame;
-			private Panel panel;
-			public Runnable init(GameFrame frame, Panel panel) {
-				this.frame = frame;
-				this.panel = panel;
-				return this;
-			}
-			public void run() {
-				frame.getContentPane().add(panel);
-			}
-		}.init(frame, gp));
+		gp.setController(controller);
+		
 
 	}
 

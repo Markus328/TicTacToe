@@ -29,9 +29,9 @@ public class CellView extends EntityView  implements Renderable{
 		// TODO Auto-generated method stub
 		super.render(g);
 		int type = ((Cell)this.entity).getType();
-		if(type == Cell.IS_O)
+		if(type == World.PLAYER_O)
 			o.render(g);
-		else if (type == Cell.IS_X)
+		else if (type == World.PLAYER_X)
 			x.render(g);
 	}
 

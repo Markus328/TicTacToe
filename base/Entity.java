@@ -75,6 +75,16 @@ public class Entity {
 	public void setView(EntityView view) {
 		this.view = view;
 	}
+	public boolean hasInside(int x, int y) {
+		int left,right,top,bottom;
+		left = this.getPosition().x; right = left + this.getDimensions().width;
+		top = this.getPosition().y; bottom = top + this.getDimensions().height;
+		if(left <= x && x <= right
+				&& top <= y && y <= bottom) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 }
