@@ -68,7 +68,6 @@ public class Grid extends Entity {
 				status[0] = cells[values[i]].getType();
 				status[1] = i < 2 ? (i + 1) + LINE_RECT : (i-1) + LINE_DIAGONAL;
 				status[2] = values[i];
-				System.out.printf("%d,%d,%d\n", status[0],status[1],status[2]);
 				World.get_instance().setRunning(false);
 				break;
 			}
