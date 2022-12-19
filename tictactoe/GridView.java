@@ -20,8 +20,6 @@ public class GridView extends EntityView {
 	
 	public GridView(Grid g) {
 		super(g);
-		// TODO Auto-generated constructor stub
-		System.out.println("a");
 		grid = new Sprite(GridView.GRID_IMG);
 		
 		grid.setPosition(g.getPosition());
