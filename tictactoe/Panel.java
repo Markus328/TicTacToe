@@ -23,7 +23,6 @@ import base.EntityView;
 import base.ImageFactory;
 import base.Renderable;
 import base.Sprite;
-import base.Stepwatch;
 
 public class Panel extends JPanel implements MouseListener{
 	private World world;
